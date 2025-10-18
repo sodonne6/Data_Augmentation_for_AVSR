@@ -10,7 +10,9 @@ TCD Timit - 3 Lipspeakers and 49 Volunteers
 
 Av-Hubert from Meta
 
-## Libraries
+## Libraries and Packagea
+
+Numpy , FFMPEG 
 
 ## Augmentation Techniques
 
