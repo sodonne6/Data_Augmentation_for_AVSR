@@ -1,51 +1,42 @@
 # Augmentation
 
-This folder contains augmentation experiments applied after core dataset preprocessing.
+This folder contains the augmentation experiments that are applied after the base dataset has already been prepared.
 
 ## Files in this folder
 
-- [interpolation_lead_lag.ipynb](interpolation_lead_lag.ipynb): TCD-TIMIT lead/lag interpolation workflow.
-- [interpolation_lead_lag_lrs3.ipynb](interpolation_lead_lag_lrs3.ipynb): LRS3 lead/lag interpolation workflow.
+- [interpolation_lead_lag.ipynb](interpolation_lead_lag.ipynb): TCD-TIMIT interpolation workflow.
+- [interpolation_lead_lag_lrs3.ipynb](interpolation_lead_lag_lrs3.ipynb): LRS3 interpolation workflow.
 - [smart_blur_notebook.ipynb](smart_blur_notebook.ipynb): TCD-TIMIT smart blur workflow.
 - [smart_blur_notebook_lrs3.ipynb](smart_blur_notebook_lrs3.ipynb): LRS3 smart blur workflow.
 
-## How the interpolation workflow works
+## Interpolation workflow
 
-1. Start from prepared 25 fps ROI/full-face videos.
-2. Upsample each clip to 50 fps with motion interpolation.
-3. Downsample to 25 fps using the mid-frame phase.
-4. Realign audio to the new frame timeline.
-5. Export aligned, lead, and lag variants.
+The interpolation notebooks create temporally shifted or densified variants of already-prepared clips. The flow is straightforward: start with a 25 fps clip, interpolate it to 50 fps, then downsample back to 25 fps using the mid-frame phase so the inserted frames are what remains in the final output.
 
-The interpolation notebooks follow this same sequence for TCD-TIMIT and LRS3, with dataset-specific paths.
+![Frame interpolation concept](../figures/interpolate_frames.png)
 
-## How the smart blur workflow works
+After the frame stream is rebuilt, the audio is trimmed and realigned to the new timeline so that the final clip stays synchronized. The timing diagram below is the reminder for why the lead and lag variants need separate alignment handling.
 
-1. Select target viseme groups.
-2. Choose span mode:
-: word mode or phone mode.
-3. Build or use alignment inputs (lab/TextGrid).
-4. Map phonemes to viseme families.
-5. Blur only selected temporal segments, keeping non-target segments intact.
+![Lead/lag timing](../figures/lead_lag_fixed.png)
 
-## Figures
+The result is a set of aligned outputs for each source clip, typically including the base stream plus lead and lag variants.
 
-![Interpolation frame generation](../figures/interpolate_frames.png)
+## Smart blur workflow
 
-![Lead lag timing](../figures/lead_lag.png)
+Smart blur works at a more semantic level. The notebook selects target viseme groups, chooses whether the blur span is defined at word level or phone level, loads the relevant alignment data, and then blurs only the chosen temporal spans.
 
-![Lead lag fixed timing](../figures/lead_lag_fixed.png)
+The mouth-region illustration is the visual reference for what part of the face is being protected or suppressed during the blur step.
 
-![Blur plus lag augmentation](../figures/blur_lag_combined.png)
+![Mouth region targeting](../figures/ch4_fig_mouth_regions_final.png)
 
-![Viseme blur idea](../figures/viseme_blur.png)
+This makes the blur method useful when you want to reduce access to specific articulatory cues while leaving the rest of the clip intact.
 
 ## Practical run order
 
-1. Run either interpolation notebook for your dataset.
-2. Validate output quality on a small speaker subset.
-3. Run smart blur notebook with selected viseme groups.
-4. Export augmented clips for training manifests.
+1. Run one of the interpolation notebooks if you need lead/lag variants.
+2. Inspect a few outputs to make sure timing and frame quality look right.
+3. Run the smart blur notebook for the dataset you are working on.
+4. Use the generated clips in training or evaluation pipelines.
 
 ## Scope boundaries
 

@@ -4,49 +4,28 @@ This folder contains the TCD-TIMIT preprocessing pipeline used to produce AV-HuB
 
 ## Files in this folder
 
-- [AVH_Data_Preprocessing.ipynb](AVH_Data_Preprocessing.ipynb): main clean preprocessing notebook.
-- [align_mouth_stabilised.py](align_mouth_stabilised.py): robust mouth ROI cropper with stabilization and landmark gap handling.
-- [normalise_timit_audio.py](normalise_timit_audio.py): RMS-targeted audio normalization against LRS3 loudness references.
-- [compare_lrs3_tcd_loudness.py](compare_lrs3_tcd_loudness.py): loudness comparison utility between LRS3 and TCD-TIMIT.
+- [AVH_Data_Preprocessing.ipynb](AVH_Data_Preprocessing.ipynb): main preprocessing notebook.
+- [align_mouth_stabilised.py](align_mouth_stabilised.py): stabilized mouth ROI cropper.
+- [normalise_timit_audio.py](normalise_timit_audio.py): audio normalization helper.
+- [compare_lrs3_tcd_loudness.py](compare_lrs3_tcd_loudness.py): loudness comparison utility.
 
-## Notebook pipeline
+## Notebook flow
 
-The notebook is intentionally linear. Run top to bottom.
+The notebook is intentionally linear. It starts by setting the dataset root, speaker scope, camera view, and tool paths, then converts the source media into 25 fps video and 16 kHz mono audio. The conversion step gives the rest of the pipeline a consistent input format.
 
-1. Configure dataset root, speaker scope, camera view, and tool paths.
-2. Convert media:
-: video to 25 fps and audio to 16 kHz mono.
-3. Build per-speaker clip list for landmark extraction.
-4. Run landmark extraction.
-5. Generate stabilized 96x96 mouth ROI clips.
+Once the media is standardized, the notebook builds the per-speaker clip list used for landmark extraction. The landmark layout below is the one the cropper relies on when it stabilizes the mouth region.
 
-## Crop and stabilization behavior
+![Landmark layout for mouth cropping](../figures/pkl_landmark_points.png)
 
-The crop helper script is built for real-world noisy landmarks and includes:
+After landmarks are available, the notebook runs the crop stage to produce stabilized 96x96 mouth ROI clips. The crop helper is designed for noisy or incomplete landmark sequences and includes invalid-frame repair, interpolation, smoothing, jump clamping, and frame-count-safe output handling.
 
-- invalid landmark frame fill/repair
-- interpolation across missing frames
-- transform smoothing and jump clamping
-- frame-count-safe output handling
-
-This is why the script is preferred over simpler crop loops when speaker/video quality varies.
-
-## Figures
+The audio trimming/alignment concept is part of the same preparation story: once media is standardized, the audio side needs to stay in sync with the visual output so the final clips remain usable for AV-HuBERT training.
 
 ![Audio trim and sync concept](../figures/audio_trim.png)
 
-![Landmark point visualization](../figures/pkl_landmark_points.png)
-
-![Batching and prep flow](../figures/batching_fix.png)
-
 ## Expected outputs
 
-For each speaker and camera view, the workflow produces:
-
-- converted full-face video clips at 25 fps
-- converted audio at 16 kHz mono
-- landmark files per clip
-- aligned mouth ROI videos
+For each speaker and camera view, the workflow produces converted full-face video clips at 25 fps, converted audio at 16 kHz mono, landmark files per clip, and aligned mouth ROI videos.
 
 ## Scope boundaries
 

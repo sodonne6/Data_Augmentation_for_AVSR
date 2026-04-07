@@ -1,57 +1,42 @@
 # Data Augmentation for AVSR
 
-This repository contains preprocessing and augmentation workflows for Audio Visual Speech Recognition experiments built around AV-HuBERT.
+This repository contains the preprocessing, alignment, and augmentation workflows used for Audio Visual Speech Recognition experiments built around AV-HuBERT.
 
-The project is organized around three practical workflows:
+The repo is centered on three working areas:
 
-1. TCD-TIMIT preparation
-2. LRS3 preparation
-3. Visual/audio augmentation experiments
+- [timit_preperation](timit_preperation) for TCD-TIMIT preprocessing
+- [lrs3_preperation](lrs3_preperation) for LRS3 preprocessing
+- [augmentation](augmentation) for interpolation and smart blur experiments
 
-## Repository structure
+## How the project flows
 
-- TCD-TIMIT prep: [timit_preperation](timit_preperation)
-- LRS3 prep: [lrs3_preperation](lrs3_preperation)
-- Augmentation experiments: [augmentation](augmentation)
-- Diagrams and visual notes: [figures](figures)
+The usual path is: prepare a dataset, generate landmarks, crop a stable mouth ROI, then run augmentation on the prepared clips.
 
-## End-to-end pipeline
+For the preprocessing stages, the media is first converted into model-friendly formats and then turned into mouth-centric inputs. The landmark step is what connects the full-face videos to the crop stage, and the crop stage is what produces the final AV-HuBERT-ready clips. The landmark visualization below shows the kind of point layout the cropper works from.
 
-1. Prepare dataset media
-: Convert video and audio to model-friendly formats (for example 25 fps and 16 kHz mono).
-2. Extract landmarks
-: Generate face landmarks for each clip.
-3. Generate mouth ROI clips
-: Stabilize and crop around the mouth to produce model inputs.
-4. Apply augmentation workflows
-: Run lead/lag interpolation and smart blur experiments for robustness testing.
+![Landmark layout used for cropping](figures/pkl_landmark_points.png)
 
-## Visual overview
+Once the base clips are ready, the augmentation notebooks introduce controlled temporal perturbations. Interpolation-based augmentation creates additional intermediate frames, while smart blur focuses on viseme or phoneme regions inside the clip.
 
-![Interpolation pipeline](figures/interpolate_frames.png)
+![Frame interpolation concept](figures/interpolate_frames.png)
 
-![Lead-lag concept](figures/lead_lag.png)
+![Lead/lag augmentation idea](figures/lead_lag.png)
 
-![Smart blur concept](figures/viseme_blur.png)
+![Smart blur example](figures/viseme_blur.png)
 
-![Audio trim and alignment concept](figures/audio_trim.png)
+![Audio trim and timing alignment](figures/audio_trim.png)
 
-## Folder-specific guides
+## Where to start
 
-- TCD-TIMIT guide: [timit_preperation/README.md](timit_preperation/README.md)
-- LRS3 guide: [lrs3_preperation/README.md](lrs3_preperation/README.md)
-- Augmentation guide: [augmentation/README.md](augmentation/README.md)
+If you are working on TCD-TIMIT, start in [timit_preperation/README.md](timit_preperation/README.md). If you are working on LRS3, start in [lrs3_preperation/README.md](lrs3_preperation/README.md). If you already have prepared clips and want to experiment with augmentation, go straight to [augmentation/README.md](augmentation/README.md).
 
 ## Typical workflow order
 
-1. Run TCD-TIMIT or LRS3 preprocessing notebook first.
-2. Verify landmarks and ROI output quality.
-3. Run augmentation notebooks on prepared clips.
-4. Compare training/evaluation outputs.
+1. Run the relevant preprocessing notebook.
+2. Check that the landmark and crop outputs look correct.
+3. Run the augmentation notebooks on the prepared clips.
+4. Compare training or evaluation results.
 
-## Notes
-
-- The project includes research/experiment files beyond the core three folders.
-- The three workflow folders above are the main maintained entry points.
+The repository also contains supporting scripts, notes, and diagrams outside these main workflow folders, but the three folders above are the intended entry points.
 
 
