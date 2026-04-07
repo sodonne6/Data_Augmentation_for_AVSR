@@ -1,0 +1,30 @@
+# Ignore these folders at the repo root
+/av_hubert/
+/Data/
+/data_processing/
+/.venv/
+/results/
+/Thesis/
+/tools/
+/Meeting_Agenda/
+/lipreading-data-guide/
+/experiments/
+/figures/
+/github_example/
+/assets/
+/notebooks/
+
+# Ignore these files at the repo root
+*.drawio
+*.ipynb_checkpoints
+*.log
+*.pdf
+*.mp4
+*.avi
+*.zip
+*.tar.gz
+*.h5
+*.pt
+*.txt
+*.csv
+
