@@ -8,6 +8,22 @@ The repo is centered on three working areas:
 - [lrs3_preperation](lrs3_preperation) for LRS3 preprocessing
 - [augmentation](augmentation) for interpolation and smart blur experiments
 
+## Environment setup
+
+Two conda environments are documented in this repository:
+
+- [augmentation/aligner_env.yml](augmentation/aligner_env.yml): minimal MFA-only environment for alignment runs.
+- [avsr_aug.yml](avsr_aug.yml): preparation + augmentation environment (notebook and script workflows).
+
+Create and activate the preparation/augmentation environment from the project root:
+
+```powershell
+conda env create -f avsr_aug.yml
+conda activate avsr_aug
+```
+
+This environment is built from imports used in the preparation and augmentation workflows, including OpenCV, NumPy/Pandas/SciPy, SoundFile, tqdm, and MFA/TextGrid tooling.
+
 ## How the project flows
 
 The usual path is: prepare a dataset, generate landmarks, crop a stable mouth ROI, then run augmentation on the prepared clips.
@@ -20,7 +36,7 @@ Once the base clips are ready, the augmentation notebooks introduce controlled t
 
 ![Frame interpolation concept](figures/interpolate_frames.png)
 
-![Mouth region targeting](../figures/ch4_fig_mouth_regions_final.png)
+![Mouth region targeting](figures/ch4_fig_mouth_regions_final.png)
 
 ## Where to start
 

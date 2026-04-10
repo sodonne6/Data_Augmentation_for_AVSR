@@ -1,0 +1,7 @@
+name: aligner
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - montreal-forced-aligner=3.3.*
+  - pip

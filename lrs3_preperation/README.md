@@ -11,17 +11,17 @@ This folder contains the LRS3 preprocessing workflow used before augmentation or
 
 ## Notebook flow
 
-The notebook starts by configuring the split and optional speaker subset, then optionally converts the source media to 25 fps video and 16 kHz audio. That standardization step keeps the later landmark and crop stages simple.
+The notebook starts by configuring the split and optional speaker subset, then runs ROI cropping on the already-prepared media.
 
 The split structure matters here, because the preprocessing uses the dataset organization to decide which speaker folders to walk. The diagram below is the visual reminder of how the dataset is partitioned before alignment and cropping happen.
 
-![Dataset split concept](../figures/avsr_dataset_split_option1.drawio.png)
-
-After the input structure is settled, the notebook extracts landmarks for the selected split and then crops stabilized mouth ROI clips from the matching video-landmark pairs.
+After the input structure is settled, the notebook crops stabilized mouth ROI clips from the matching video-landmark pairs. The landmark files are treated as existing inputs for LRS3 preprocessing.
 
 ## Alignment and blur readiness
 
 If you need phone-level blur later, the alignment step is what makes that possible. The workflow is: generate lab text files if needed, run [align_lrs3_with_mfa.py](align_lrs3_with_mfa.py) to produce TextGrid alignments, and then feed those alignments into the augmentation notebooks for phone-span blurring.
+
+For this preprocessing stage, no extra audio conversion or fps conversion is required.
 
 ## Mouth crop script behavior
 
@@ -31,8 +31,4 @@ The landmark layout below is the visual reference for the crop stage.
 
 ![Landmark layout for mouth cropping](../figures/pkl_landmark_points.png)
 
-## Scope boundaries
 
-- This folder is LRS3-specific.
-- Augmentation method notebooks live in [augmentation](../augmentation).
-- TCD-TIMIT-specific prep lives in [timit_preperation](../timit_preperation).

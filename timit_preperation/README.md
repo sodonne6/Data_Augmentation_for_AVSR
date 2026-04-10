@@ -27,8 +27,4 @@ The audio trimming/alignment concept is part of the same preparation story: once
 
 For each speaker and camera view, the workflow produces converted full-face video clips at 25 fps, converted audio at 16 kHz mono, landmark files per clip, and aligned mouth ROI videos.
 
-## Scope boundaries
 
-- This folder is TCD-TIMIT-specific.
-- Augmentation workflows belong in [augmentation](../augmentation).
-- LRS3-specific preparation belongs in [lrs3_preperation](../lrs3_preperation).
