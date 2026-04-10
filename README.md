@@ -20,11 +20,7 @@ Once the base clips are ready, the augmentation notebooks introduce controlled t
 
 ![Frame interpolation concept](figures/interpolate_frames.png)
 
-![Lead/lag augmentation idea](figures/lead_lag.png)
-
-![Smart blur example](figures/viseme_blur.png)
-
-![Audio trim and timing alignment](figures/audio_trim.png)
+![Mouth region targeting](../figures/ch4_fig_mouth_regions_final.png)
 
 ## Where to start
 
