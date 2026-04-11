@@ -34,7 +34,7 @@ For the preprocessing stages, the media is first converted into model-friendly f
 
 Once the base clips are ready, the augmentation notebooks introduce controlled temporal perturbations. Interpolation-based augmentation creates additional intermediate frames, while smart blur focuses on viseme or phoneme regions inside the clip.
 
-<img src="figures/interpolate_frames.png" alt="Frame interpolation concept" width="800">
+<img src="figures/interpolate_frames.png" alt="Frame interpolation concept" width="1200">
 
 After interpolation, the pipeline moves from global temporal changes to spatially focused modifications. In practice, this means selecting the most speech-relevant area of each frame and applying targeted augmentation where it has the highest impact on lip articulation cues. The mouth-region view below illustrates how these localized regions are defined before smart blur is applied.
 
