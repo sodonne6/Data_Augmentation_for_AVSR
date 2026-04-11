@@ -51,6 +51,8 @@ The Gaussian blur applied to the selected mouth region typically looks like the 
 
 If you want phone-level spans in augmentation workflows, generate TextGrid alignments with Montreal Forced Aligner (MFA) first.
 
+Tooling requirement: ensure `ffmpeg` and `ffprobe` are available in your active environment (or set explicit executable paths in notebook cells).
+
 ### Required corpus layout
 
 For MFA to align correctly, each utterance must have:
@@ -86,15 +88,15 @@ Environment file: [augmentation/aligner_env.yml](aligner_env.yml)
 
 ```powershell
 mfa model download acoustic english_mfa
-mfa model download dictionary english_us_arpa
+mfa model download dictionary english_mfa
 ```
 
 ### 3. Run MFA alignment (generic command)
 
-Use your corpus directory as both input and output so `.TextGrid` files are written next to each `.wav`/`.lab` pair:
+Use your corpus directory as both input and output so `.TextGrid` files are written next to each `.wav`/`.lab` pair. This mirrors [lrs3_preperation/align_lrs3_with_mfa.py](../lrs3_preperation/align_lrs3_with_mfa.py):
 
 ```powershell
-mfa align --clean --verbose "E:\lrs3_rj\lrs3\trainval" english_us_arpa english_mfa "E:\lrs3_rj\lrs3\trainval"
+mfa align --clean --verbose "E:\lrs3_rj\lrs3\trainval" english_mfa english_mfa "E:\lrs3_rj\lrs3\trainval"
 ```
 
 This produces files like:

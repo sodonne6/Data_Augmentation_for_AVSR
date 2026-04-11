@@ -24,6 +24,21 @@ conda activate avsr_aug
 
 This environment is built from imports used in the preparation and augmentation workflows, including OpenCV, NumPy/Pandas/SciPy, SoundFile, tqdm, and MFA/TextGrid tooling.
 
+## Required tools and expected paths
+
+Before running preprocessing or augmentation, make sure these external dependencies and dataset layouts are available.
+
+- `ffmpeg` and `ffprobe` must be callable from your shell `PATH` (or configured explicitly in notebook/script cells).
+- MFA requires the `aligner` conda env and model resources used by the alignment script.
+- dlib landmark models are required for TCD-TIMIT landmark extraction in the preprocessing notebook.
+
+Expected root-level data layouts used by the workflows:
+
+- TCD-TIMIT root: `.../TCD_TIMIT/{volunteers|lipspeakers}/<speaker>/Clips/...`
+- LRS3 root: `.../lrs3/{trainval,test,pretrain}/<speaker>/<utt>.mp4`
+- LRS3 landmarks: `.../lrs3/landmark/<split>/<speaker>/<utt>.pkl`
+- LRS3 TextGrid alignment output: next to each `.wav`/`.lab` pair under the selected split folder
+
 ## How the project flows
 
 The usual path is: prepare a dataset, generate landmarks, crop a stable mouth ROI, then run augmentation on the prepared clips.
@@ -65,7 +80,5 @@ The table below summarizes a small set of representative LRS3 results: the two c
 | Low Visibility Viseme Blur (G,H,I,J,K) - Word-Level | 3.90% | 5.04% |
 
 The repository also contains supporting scripts, notes, and diagrams outside these main workflow folders, but the three folders above are the intended entry points.
-
-For a thesis-to-code cross-check of script names and implementation logic, see [Thesis/github_submission_traceability.md](Thesis/github_submission_traceability.md).
 
 

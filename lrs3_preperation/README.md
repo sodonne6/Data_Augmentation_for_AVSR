@@ -9,6 +9,17 @@ This folder contains the LRS3 preprocessing workflow used before augmentation or
 - [align_lrs3_with_mfa.py](align_lrs3_with_mfa.py): Montreal Forced Aligner runner for TextGrid generation.
 - [compare_wer_ttest.py](compare_wer_ttest.py): evaluation comparison helper with significance testing.
 
+## External requirements and expected layout
+
+- `ffmpeg` and `ffprobe` available in your active environment (or set explicit paths in notebook cells).
+- MFA models used by the alignment script: `english_mfa` acoustic and `english_mfa` dictionary.
+
+Expected LRS3 structure:
+
+- Video split root: `.../lrs3/<split>/<speaker>/<utt>.mp4`
+- Landmark root: `.../lrs3/landmark/<split>/<speaker>/<utt>.pkl`
+- TextGrid output after MFA: next to each `.wav`/`.lab` pair in your alignment input folder
+
 ## Notebook flow
 
 The notebook starts by configuring the split and optional speaker subset, then runs ROI cropping on the already-prepared media.

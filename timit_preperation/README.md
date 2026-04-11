@@ -5,10 +5,24 @@ This folder contains the TCD-TIMIT preprocessing pipeline used to produce AV-HuB
 ## Files in this folder
 
 - [AVH_Data_Preprocessing.ipynb](AVH_Data_Preprocessing.ipynb): main preprocessing notebook.
-- [align_mouth_stabilised.py](align_mouth_stabilised.py): stabilized mouth ROI cropper.
+- [../av_hubert_overrides/align_mouth_stabilised.py](../av_hubert_overrides/align_mouth_stabilised.py): canonical stabilized mouth ROI cropper used by preprocessing.
 - [normalise_timit_audio.py](normalise_timit_audio.py): audio normalization helper.
 - [trim_tcd_timit_dataset.py](trim_tcd_timit_dataset.py): detects leading/trailing silence from audio using a configurable dB threshold, then applies the same trim window to audio and video.
 - [compare_lrs3_tcd_loudness.py](compare_lrs3_tcd_loudness.py): loudness comparison utility.
+
+## External requirements and expected layout
+
+- `ffmpeg` and `ffprobe` available in your active environment.
+- dlib landmark model files available and correctly referenced in `AVH_Data_Preprocessing.ipynb`:
+	- `mmod_human_face_detector.dat`
+	- `shape_predictor_68_face_landmarks.dat`
+
+Expected TCD-TIMIT folder naming used by scripts in this folder:
+
+- Input root: `.../TCD_TIMIT/{volunteers|lipspeakers}/<speaker>/Clips/...`
+- Normalization input: `processed/audio16k_cropped/<cam>/`
+- Trim script audio input: `processed/audio16k_norm_1/<cam>/`
+- Trim script video input: `processed/video25crop_alignmouth/<cam>/`
 
 ## Notebook flow
 
