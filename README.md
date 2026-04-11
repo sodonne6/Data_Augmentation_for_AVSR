@@ -30,7 +30,7 @@ The usual path is: prepare a dataset, generate landmarks, crop a stable mouth RO
 
 For the preprocessing stages, the media is first converted into model-friendly formats and then turned into mouth-centric inputs. The landmark step is what connects the full-face videos to the crop stage, and the crop stage is what produces the final AV-HuBERT-ready clips. The landmark visualization below shows the kind of point layout the cropper works from.
 
-<img src="figures/pkl_landmark_points.png" alt="Landmark layout used for cropping" width="700">
+<img src="figures/pkl_landmark_points.png" alt="Landmark layout used for cropping" width="400">
 
 Once the base clips are ready, the augmentation notebooks introduce controlled temporal perturbations. Interpolation-based augmentation creates additional intermediate frames, while smart blur focuses on viseme or phoneme regions inside the clip.
 
