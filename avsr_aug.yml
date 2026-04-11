@@ -1,0 +1,16 @@
+name: avsr_aug
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - numpy
+  - pandas
+  - scipy
+  - opencv
+  - tqdm
+  - pysoundfile
+  - ffmpeg
+  - montreal-forced-aligner=3.3.*
+  - pip
+  - pip:
+      - tgt

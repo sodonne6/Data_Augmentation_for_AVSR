@@ -31,6 +31,15 @@ The mouth-region illustration is the visual reference for what part of the face 
 
 This makes the blur method useful when you want to reduce access to specific articulatory cues while leaving the rest of the clip intact.
 
+The Gaussian blur applied to the selected mouth region typically looks like the examples below.
+
+<table>
+	<tr>
+		<td><img src="../figures/mid_mouth_blur_squared.png" alt="Gaussian blur over a larger central mouth region" width="340"></td>
+		<td><img src="../figures/corners_pucker_lip_squared.png" alt="Gaussian blur over a smaller mouth articulation region" width="340"></td>
+	</tr>
+</table>
+
 ## Practical run order
 
 1. Run one of the interpolation notebooks if you need lead/lag variants.

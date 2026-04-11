@@ -30,13 +30,15 @@ The usual path is: prepare a dataset, generate landmarks, crop a stable mouth RO
 
 For the preprocessing stages, the media is first converted into model-friendly formats and then turned into mouth-centric inputs. The landmark step is what connects the full-face videos to the crop stage, and the crop stage is what produces the final AV-HuBERT-ready clips. The landmark visualization below shows the kind of point layout the cropper works from.
 
-![Landmark layout used for cropping](figures/pkl_landmark_points.png)
+<img src="figures/pkl_landmark_points.png" alt="Landmark layout used for cropping" width="700">
 
 Once the base clips are ready, the augmentation notebooks introduce controlled temporal perturbations. Interpolation-based augmentation creates additional intermediate frames, while smart blur focuses on viseme or phoneme regions inside the clip.
 
-![Frame interpolation concept](figures/interpolate_frames.png)
+<img src="figures/interpolate_frames.png" alt="Frame interpolation concept" width="800">
 
-![Mouth region targeting](figures/ch4_fig_mouth_regions_final.png)
+After interpolation, the pipeline moves from global temporal changes to spatially focused modifications. In practice, this means selecting the most speech-relevant area of each frame and applying targeted augmentation where it has the highest impact on lip articulation cues. The mouth-region view below illustrates how these localized regions are defined before smart blur is applied.
+
+<img src="figures/ch4_fig_mouth_regions_final.png" alt="Mouth region targeting" width="800">
 
 ## Where to start
 
@@ -49,6 +51,21 @@ If you are working on TCD-TIMIT, start in [timit_preperation/README.md](timit_pr
 3. Run the augmentation notebooks on the prepared clips.
 4. Compare training or evaluation results.
 
+## Results
+
+The table below summarizes a small set of representative LRS3 results: the two control runs first (baseline and AV-HuBERT image augmentation), followed by selected top-performing interpolation and viseme blur configurations.
+
+| Run Type | WER | Relative Improvement |
+| --- | ---: | ---: |
+| No Augmentation | 4.11% | 0.00% |
+| AV-HuBERT Image Augmentation | 4.02% | 2.09% |
+| 200 ms Lag Interpolation | 3.76% | 8.48% |
+| 100 ms Lag Interpolation | 3.88% | 5.60% |
+| Viseme Blur Highest Visibility (B,C,D,E,F) - Word-Level | 3.83% | 6.76% |
+| Low Visibility Viseme Blur (G,H,I,J,K) - Word-Level | 3.90% | 5.04% |
+
 The repository also contains supporting scripts, notes, and diagrams outside these main workflow folders, but the three folders above are the intended entry points.
+
+For a thesis-to-code cross-check of script names and implementation logic, see [Thesis/github_submission_traceability.md](Thesis/github_submission_traceability.md).
 
 
