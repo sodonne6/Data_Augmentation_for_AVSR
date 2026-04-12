@@ -273,22 +273,10 @@ class AVHubertDataset(FairseqDataset):
         self._aug1_used_count = 0
         self._aug2_used_count = 0
 
-        # ------------------------------------------------------------------
-        # Built-in-style external augmentation: swap base sample -> aug sample
-        # without changing dataset length (like image_aug/noise_prob).
-        #
-        # We load base from manifest_path (train.tsv).
-        # If train_aug.tsv exists, we build a lookup by utterance key (<vid>/<utt>).
-        # Then during training, __getitem__ chooses aug with probability aug_prob.
-        #
-        # Two-manifest extension
-        # ----------------------
-        # AVH_AUG_MANIFEST   → aug_names   (aug source 1, e.g. blur)
-        # AVH_AUG_MANIFEST_2 → aug_names_2 (aug source 2, e.g. interpolated)
-        #
-        # Level 1: P(aug_prob)  → use some augmentation
-        # Level 2: P(0.5)       → pick aug1 vs aug2 (when both available)
-        # ------------------------------------------------------------------
+        # External augmentation keeps dataset length unchanged.
+        # AVH_AUG_MANIFEST and AVH_AUG_MANIFEST_2 point to the two aug sources.
+        # Level 1 decides whether to use augmentation at all.
+        # Level 2 picks aug 1 or aug 2 when both are available.
         self.aug_prob = float(os.environ.get("AVH_AUG_PROB", "0"))
         self.aug_manifest = os.environ.get("AVH_AUG_MANIFEST", "").strip()
 

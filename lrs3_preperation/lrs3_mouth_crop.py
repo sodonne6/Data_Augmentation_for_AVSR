@@ -27,7 +27,7 @@ import json
 from datetime import datetime
 
 
-# ============= CONFIG =============
+# Config
 ALIGN_SCRIPT = Path(r"C:\Users\irish\Computer_Electronic_Engineering_Year5\AVSR_project\av_hubert\av_hubert\avhubert\preparation\align_mouth_stabilised.py")
 MEAN_FACE_NPY = Path(r"C:\Users\irish\Computer_Electronic_Engineering_Year5\AVSR_project\assets\mean_face\20words_mean_face.npy")
 
@@ -226,10 +226,10 @@ def process_speaker(
         print(out.strip())
     
     if rc != 0:
-        print(f"[{speaker_code}] ❌ FAILED (return code {rc})")
+        print(f"[{speaker_code}] FAILED (return code {rc})")
         return False
     else:
-        print(f"[{speaker_code}] ✅ SUCCESS")
+        print(f"[{speaker_code}] SUCCESS")
         return True
 
 
@@ -277,7 +277,7 @@ def main():
             args.output_base_dir,
         )
     except FileNotFoundError as e:
-        print(f"❌ Validation error: {e}")
+        print(f"Validation error: {e}")
         return 1
     
     print(f"\nInput (blurred videos): {blur_video_dir}")
@@ -289,7 +289,7 @@ def main():
     # Discover speakers
     speakers = discover_speakers(blur_video_dir)
     if not speakers:
-        print("❌ No speakers found in blur video directory")
+        print("No speakers found in blur video directory")
         return 1
     
     print(f"Found {len(speakers)} speakers\n")
@@ -312,9 +312,9 @@ def main():
                     continue
                 status = next(x for x in status_list if x["speaker"] == speaker)
                 if idx == redo_idx:
-                    process_speakers.append(speaker)  # always redo the last completed
+                    process_speakers.append(speaker)
                 elif status["complete"]:
-                    continue  # skip later speakers that are already complete
+                    continue
                 else:
                     process_speakers.append(speaker)
 

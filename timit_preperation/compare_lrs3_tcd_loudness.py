@@ -18,13 +18,13 @@ VOLUNTEERS = [
 LIPSPEAKERS = ["Lipspkr1","Lipspkr2","Lipspkr3"]
 
 # sample sizes
-N_LRS3 = 500                 # total random LRS3 wavs
-N_PER_SPEAKER = 20           # per volunteer/lipspeaker per condition (cropped & norm)
+N_LRS3 = 500                 #total random LRS3 wavs
+N_PER_SPEAKER = 20           #per volunteer/lipspeaker per condition (cropped & norm)
 SEED = 0
 
 # which TCD folders to compare
 TCD_BEFORE_NAME = "audio16k_cropped"
-TCD_AFTER_NAME  = "audio16k_norm"   # you overwrote this
+TCD_AFTER_NAME  = "audio16k_norm"   
 
 # ----------------- HELPERS -----------------
 random.seed(SEED)

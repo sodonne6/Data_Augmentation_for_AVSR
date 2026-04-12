@@ -21,3 +21,26 @@ That pairing rule keeps the loader consistent across epochs and avoids accidenta
 - [hubert_dataset.py](hubert_dataset.py): dataset loading override for batching/indexing behavior.
 - [align_mouth_stabilised.py](align_mouth_stabilised.py): preprocessing override related to stabilized mouth crops.
 
+## Setup Notes
+
+Before using the override, point the environment variables in your launch cell at the augmented TSV files you want to mix in. In the example below, set `AVH_AUG_MANIFEST` and `AVH_AUG_MANIFEST_2` to the two augmented manifests you want the loader to use, and leave them unset if you want no external augmentation.
+
+Example:
+
+```bash
+export AVH_AUG_PROB=0.5
+export AVH_AUG_MANIFEST="/content/drive/MyDrive/AVSR_Colab/manifests/augmented/data/train_aug.tsv"
+export AVH_AUG_MANIFEST_2="/content/drive/MyDrive/AVSR_Colab/manifests/augmented/data/train_aug_2.tsv"
+```
+
+The paths must exist in your environment and must match the TSV layout expected by the loader, including the video and audio columns.
+
+After that, replace the `hubert_dataset.py` file in your AV-HuBERT directory with the override version from this folder. A simple PowerShell example is:
+
+```powershell
+Copy-Item "C:\path\to\av_hubert\fairseq\data\hubert_dataset.py" "C:\path\to\av_hubert\fairseq\data\hubert_dataset.py.bak"
+Copy-Item "C:\path\to\root\av_hubert_overrides\hubert_dataset.py" "C:\path\to\av_hubert\fairseq\data\hubert_dataset.py"
+```
+
+If your AV-HuBERT tree uses a different location for `hubert_dataset.py`, adjust the destination path accordingly, but keep the backup step first so you can restore the original file if needed.
+

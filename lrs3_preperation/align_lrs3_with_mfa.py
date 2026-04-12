@@ -20,20 +20,15 @@ import sys
 from pathlib import Path
 import shutil
 
-# ========== CONFIGURATION ==========
-
-# Root directories
+# Config
 TRAINVAL_ROOT = Path(r"E:\lrs3_rj\lrs3\trainval")
 
 # MFA settings
 CONDA_ENV = "aligner"
 MFA_ACOUSTIC_MODEL = "english_mfa"
-MFA_MPS = False  # Set to True if you want to use GPU (Apple Silicon), False for CPU
+MFA_MPS = False  
 
-# Where to look for/create the lexicon (MFA downloads it automatically)
-# For english_mfa, it uses a built-in English lexicon
-
-# ========== HELPER FUNCTIONS ==========
+# Helper functions
 
 def run_command(cmd, description=""):
     """Run a shell command and report status."""
@@ -49,7 +44,7 @@ def run_command(cmd, description=""):
         print(f"\n[ERROR] Command failed with exit code {result.returncode}")
         return False
     
-    print(f"\n✓ Command completed successfully")
+    print("\nOK: command completed successfully")
     return True
 
 def check_wav_and_lab_files(speaker_dir: Path) -> int:
@@ -69,14 +64,14 @@ def validate_setup():
     if not TRAINVAL_ROOT.exists():
         print(f"[ERROR] TRAINVAL_ROOT not found: {TRAINVAL_ROOT}")
         return False
-    print(f"✓ TRAINVAL_ROOT exists: {TRAINVAL_ROOT}")
+    print(f"OK: TRAINVAL_ROOT exists: {TRAINVAL_ROOT}")
     
     # Count speakers and clips
     speaker_dirs = sorted([d for d in TRAINVAL_ROOT.iterdir() if d.is_dir()])
     if not speaker_dirs:
         print(f"[ERROR] No speaker directories found in {TRAINVAL_ROOT}")
         return False
-    print(f"✓ Found {len(speaker_dirs)} speaker directories")
+    print(f"OK: found {len(speaker_dirs)} speaker directories")
     
     # Check for .wav/.lab pairs
     total_pairs = 0
@@ -89,10 +84,10 @@ def validate_setup():
     for spk_dir in speaker_dirs[3:]:
         total_pairs += check_wav_and_lab_files(spk_dir)
     
-    print(f"\n✓ Total .wav/.lab pairs ready for alignment: {total_pairs}")
+    print(f"\nTotal .wav/.lab pairs ready for alignment: {total_pairs}")
     
     if total_pairs == 0:
-        print("\n[ERROR] No .wav/.lab pairs found!")
+        print("\n[ERROR] No .wav/.lab pairs found")
         print("  Make sure you've run Cell 3 (prepare .lab files) in the notebook first.")
         return False
     
@@ -119,26 +114,11 @@ def main():
     print(f"  Conda environment:   {CONDA_ENV}")
     print(f"  MPS (GPU on Mac):    {MFA_MPS}\n")
     
-    # Build MFA command
-    # MFA 3.3.8 syntax: mfa align [OPTIONS] INPUT_DIR LEXICON_PATH MODEL_PATH OUTPUT_DIR
-    # For english_mfa, the lexicon is built-in, so we use the model name
+    # Build the MFA command.
     
     mps_flag = "--mps" if MFA_MPS else ""
     
-    # MFA doesn't automatically use built-in lexicons, so we need to explicitly handle this
-    # For english_mfa, the command uses the model name as both lexicon and model
-    # In MFA 3.3.8, you typically do:
-    # mfa align <input> <lexicon> <acoustic_model> <output>
-    
-    # But for english_mfa (which is built-in), we use:
-    # mfa align <input> english_mfa <output> (it infers the lexicon)
-    
-    # Actually, let me check the correct syntax for MFA 3.3.8:
-    # The command should be:
-    # mfa align [OPTIONS] INPUT_DIR LEXICON MODEL OUTPUT_DIR
-    
-    # For english_mfa, the lexicon path would be fetched automatically
-    # Let's use the full command:
+    # Keep the built-in english_mfa setup explicit.
     
     cmd = (
         f"conda run -n {CONDA_ENV} "
@@ -183,12 +163,12 @@ def main():
         print("  Check the MFA output above for errors.")
         sys.exit(1)
     
-    print(f"\n✓ Total TextGrid files created: {textgrid_count}")
-    print(f"✓ TextGrids are saved alongside .wav files in each speaker folder")
+    print(f"\nOK: total TextGrid files created: {textgrid_count}")
+    print("OK: TextGrids are saved alongside .wav files in each speaker folder")
     
     # Step 4: Success message
     print("\n" + "="*70)
-    print("  ✓ MFA ALIGNMENT COMPLETE!")
+    print("  MFA ALIGNMENT COMPLETE")
     print("="*70)
     print("\nTextGrids are ready for use in the smart blur notebook:")
     print("  Cell 10 will now find and use these TextGrids for phoneme-level blurring.")

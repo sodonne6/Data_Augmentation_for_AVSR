@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 """
-Dependency list:
+Compare ASR decode JSON outputs from a baseline and an improved model.
+
+Requires:
 - Python 3.8+
 - scipy
-- matplotlib (optional, only needed if --plot-diff-hist is used)
+- matplotlib, only if --plot-diff-hist is used
 
-Compare ASR decode JSON outputs from a baseline and an improved model.
-The expected JSON structure is a dictionary of parallel lists:
+The JSON input should be a dict with parallel lists:
 {
-  "utt_id": ["utt1", "utt2", ...],
-  "ref":    ["reference text 1", ...],
-  "hypo":   ["hypothesis text 1", ...]
+    "utt_id": ["utt1", "utt2", ...],
+    "ref": ["reference text 1", ...],
+    "hypo": ["hypothesis text 1", ...]
 }
 """
 
