@@ -136,11 +136,7 @@ def main():
     
     if not success:
         print("\n[ERROR] MFA alignment failed!")
-        print("\nTroubleshooting:")
-        print("  1. Make sure you're in the 'aligner' environment")
-        print("  2. Check that .wav and .lab files exist")
-        print("  3. Run: mfa model download acoustic english_mfa")
-        print("  4. Check MFA documentation: https://montreal-forced-aligner.readthedocs.io/")
+        print("Check environment setup, input files, and MFA model availability.")
         sys.exit(1)
     
     # Step 3: Verify TextGrid output
@@ -172,9 +168,6 @@ def main():
     print("="*70)
     print("\nTextGrids are ready for use in the smart blur notebook:")
     print("  Cell 10 will now find and use these TextGrids for phoneme-level blurring.")
-    print("\nNext steps:")
-    print("  1. Run Cell 1 of the notebook to set SPAN_MODE = 'phone' if desired")
-    print("  2. Run Cell 10 to start batch blurring with phoneme-level precision")
 
 if __name__ == "__main__":
     main()
